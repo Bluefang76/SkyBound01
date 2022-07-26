@@ -21,7 +21,7 @@ public class Winner : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag == "Finish")
         {
 
         }

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 54470952}
   - component: {fileID: 54470951}
   - component: {fileID: 54470950}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: trampoline
   m_TagString: Trampoline
   m_Icon: {fileID: 0}
@@ -249,8 +249,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54470949}
   m_LocalRotation: {x: -0, y: -0, z: 0.0039437064, w: 0.9999923}
-  m_LocalPosition: {x: 0.64, y: -1.38, z: 0}
-  m_LocalScale: {x: 1, y: 0.901992, z: 1}
+  m_LocalPosition: {x: 0.3258, y: -1.4867, z: 0}
+  m_LocalScale: {x: 0.7538, y: 0.8205421, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -304,11 +304,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130813036}
   m_LocalRotation: {x: 0.017454883, y: -0, z: -0, w: 0.99984765}
-  m_LocalPosition: {x: -1.877, y: 0.744, z: 0.017}
+  m_LocalPosition: {x: 0.76, y: 1.84, z: 0.06}
   m_LocalScale: {x: 0.81438, y: 0.81438, z: 0.81438}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1775794780}
+  - {fileID: 1002264131}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 2, y: 0, z: 0}
@@ -324,11 +325,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2570e9e328e07643806515002d3d058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  jumpForce: 2.83
   jumpspeed: 200
-  runspeed: 15
-  launchforce: 60.61
+  runspeed: 10
+  launchforce: 100
   coyoteTime: 0.2
   coyoteTimeCounter: 0
+  isTramped: 0
+  maxjumptime: 0.15
+  velocity: 0
+  multiplier: 0
+  distance: 0.1
+  groundlayer:
+    serializedVersion: 2
+    m_Bits: 64
+  tramplayer:
+    serializedVersion: 2
+    m_Bits: 128
+  feet: {fileID: 1002264131}
 --- !u!61 &130813040
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -366,7 +380,7 @@ GameObject:
   - component: {fileID: 630140712}
   - component: {fileID: 630140711}
   - component: {fileID: 630140714}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Land
   m_TagString: Land
   m_Icon: {fileID: 0}
@@ -466,6 +480,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &1002264130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1002264131}
+  m_Layer: 0
+  m_Name: feet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1002264131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1002264130}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.31, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 130813038}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1144414564
 GameObject:
   m_ObjectHideFlags: 0
