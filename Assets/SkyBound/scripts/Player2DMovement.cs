@@ -8,6 +8,7 @@ public class Player2DMovement : MonoBehaviour
     public LayerMask groundlayer;
     public LayerMask tramplayer;
     public Transform feet;
+    Buffed buffed;
 
     [Header ("Jump")]
     public float jumpForce = 7;
@@ -17,14 +18,14 @@ public class Player2DMovement : MonoBehaviour
     [Space]
 
     [Header ("Move")]
-    public float launchforce = 100;
-    public float coyoteTime = 0.2f;
-    public float coyoteTimeCounter;
+    //public float launchforce = 100;
+    private float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
     public bool isTramped;
-    public float maxjumptime = 0.15f;
+    private float maxjumptime = 0.15f;
     public float velocity;
     public float multiplier;
-
+    //public float upSpeed = velocity * 2;
     [Space]
 
     public float minMulti;
@@ -36,11 +37,12 @@ public class Player2DMovement : MonoBehaviour
     private bool isGrounded;
     Rigidbody2D rb2d;
 
-    bool hasJumped = false;
+    public bool hasJumped = false;
 
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        buffed = FindObjectOfType<Buffed>();
     }
 
     void Update()
@@ -111,16 +113,27 @@ public class Player2DMovement : MonoBehaviour
 
         Debug.DrawRay(feet.position, -Vector2.up * distance, Color.blue);
         velocity = rb2d.velocity.magnitude;
-        if (isTramped && !hasJumped)
+
+
+
+
+
+        if (isTramped && buffed.GetInput(KeyCode.Space))
         {
-            jumpCount++;
-            hasJumped = true;
-           
+            if (!hasJumped)
+            {
+                jumpCount++;
+                hasJumped = true;
 
-            Debug.Log("GetJumpMultiplier: " + GetJumpMultiplier());
-            rb2d.AddForce(Vector2.up * velocity * GetJumpMultiplier(), ForceMode2D.Impulse);
+
+               Debug.Log("GetJumpMultiplier: " + GetJumpMultiplier());
+                rb2d.AddForce(Vector2.up * velocity * 2 * GetJumpMultiplier(), ForceMode2D.Impulse);
+            }
         }
-
+        else if (isTramped)
+        {
+            rb2d.AddForce(Vector2.up * velocity * 2, ForceMode2D.Impulse);
+        }
 
         // Grounding
         isGrounded = Physics2D.Raycast(feet.position, -Vector2.up, distance, groundlayer);
