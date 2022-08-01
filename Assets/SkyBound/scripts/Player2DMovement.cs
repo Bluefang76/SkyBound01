@@ -4,6 +4,74 @@ using UnityEngine;
 
 public class Player2DMovement : MonoBehaviour
 {
+    private Rigidbody2D rb;
+    [SerializeField] private int jumpSpeed;
+    [SerializeField] private float runSpeed;
+    public SpriteRenderer playerSprite;
+    [SerializeField] private int TForce;
+   /* public Animator animator;
+    private bool onground;*/
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        //animator = GetComponent<Animator>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        //Jumping
+        if (Input.GetKeyDown(KeyCode.Space) /*&& onground*/)
+        {
+            Jump();
+        }
+
+       
+
+        //Movement
+
+        float horInput = Input.GetAxis("Horizontal");
+
+        playerSprite.flipX = horInput < 0 ? true : false;
+
+        rb.velocity = new Vector2(horInput * runSpeed, rb.velocity.y);
+
+        
+        /*animator.SetBool("run", horInput != 0);
+        animator.SetBool("onground", onground);*/
+
+    }
+
+    private void Jump()
+    {
+        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
+        //onground = false;
+    }
+
+    
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Trampoline")
+        {
+            rb.AddForce(collision.gameObject.transform.right * TForce);
+            Debug.Log("Trampoline Collision");
+        }
+    }
+}
+
+
+
+
+
+/*using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Player2DMovement : MonoBehaviour
+{
     public float jumpspeed = 200;
     public float runspeed = 20;
     Rigidbody2D rb2d;
@@ -64,4 +132,4 @@ public class Player2DMovement : MonoBehaviour
             
         }
     }
-}
+}*/
