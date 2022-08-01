@@ -124,9 +124,7 @@ public class Player2DMovement : MonoBehaviour
             {
                 jumpCount++;
                 hasJumped = true;
-
-
-               Debug.Log("GetJumpMultiplier: " + GetJumpMultiplier());
+              // Debug.Log("GetJumpMultiplier: " + GetJumpMultiplier());
                 rb2d.AddForce(Vector2.up * velocity * 2 * GetJumpMultiplier(), ForceMode2D.Impulse);
             }
         }

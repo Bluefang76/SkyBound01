@@ -16,7 +16,6 @@ public class Buffed : MonoBehaviour
             inputStorage.inputTime = Time.time;
             inputStorage.inputKey = KeyCode.Space;
             inputBuffer.Add(inputStorage);
-
         }
     }
 

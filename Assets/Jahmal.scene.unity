@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 54470953}
   - component: {fileID: 54470952}
-  - component: {fileID: 54470951}
   - component: {fileID: 54470950}
   m_Layer: 7
   m_Name: trampoline
@@ -168,27 +167,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.56, y: 0.5430958}
   m_EdgeRadius: 0
---- !u!50 &54470951
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 54470949}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 7
 --- !u!212 &54470952
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -304,7 +282,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 130813036}
   m_LocalRotation: {x: 0.017454883, y: -0, z: -0, w: 0.99984765}
-  m_LocalPosition: {x: 0.76, y: 1.84, z: 0.06}
+  m_LocalPosition: {x: -0.17, y: 1.61, z: 0.11}
   m_LocalScale: {x: 0.81438, y: 0.81438, z: 0.81438}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -328,13 +306,38 @@ MonoBehaviour:
   jumpForce: 2.83
   jumpspeed: 200
   runspeed: 10
-  launchforce: 100
-  coyoteTime: 0.2
-  coyoteTimeCounter: 0
   isTramped: 0
-  maxjumptime: 0.15
   velocity: 0
   multiplier: 0
+  minMulti: 1.2
+  maxMulti: 1.5
+  jumpCount: 0
+  maxJumpCount: 99
+  multiCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hasJumped: 0
   distance: 0.1
   groundlayer:
     serializedVersion: 2
@@ -504,7 +507,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1002264130}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.31, z: 0}
+  m_LocalPosition: {x: 0, y: -0.345, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
