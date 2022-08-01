@@ -9,9 +9,11 @@ public class Player2DMovement : MonoBehaviour
     [SerializeField] private float runSpeed;
     public SpriteRenderer playerSprite;
     [SerializeField] private int TForce;
-   /* public Animator animator;
-    private bool onground;*/
+    //Vector3 local = transform.localScale;
+    /* public Animator animator;
+     private bool onground;*/
 
+    float horInput;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,16 +35,22 @@ public class Player2DMovement : MonoBehaviour
 
         //Movement
 
-        float horInput = Input.GetAxis("Horizontal");
-
+        horInput = Input.GetAxis("Horizontal");
         playerSprite.flipX = horInput < 0 ? true : false;
 
-        rb.velocity = new Vector2(horInput * runSpeed, rb.velocity.y);
+       
 
-        
+
         /*animator.SetBool("run", horInput != 0);
         animator.SetBool("onground", onground);*/
 
+        //OnBecameInvisible();
+
+    }
+
+    private void FixedUpdate()
+    {
+        rb.AddForce(Vector2.right * horInput * runSpeed);
     }
 
     private void Jump()
@@ -56,10 +64,28 @@ public class Player2DMovement : MonoBehaviour
     {
         if (collision.gameObject.tag == "Trampoline")
         {
-            rb.AddForce(collision.gameObject.transform.right * TForce);
+            
+            rb.AddForce(collision.gameObject.transform.up * TForce);
             Debug.Log("Trampoline Collision");
+
+            if (collision.gameObject.TryGetComponent(out Trampoline trampoline))
+            {
+                trampoline.DoEffect();
+            }
+            /*collision.transform.localScale = new Vector3((float)1.5,(float)1.5, 0);
+            collision.transform.localScale = new Vector3((float)1, (float)1, 0);
+            collision.transform.localScale = new Vector3((float)1.5, (float)1.5, 0);
+            collision.transform.localScale = new Vector3(1, 1, 0);*/
         }
+
+
     }
+
+    /*public void OnBecameInvisible()
+    {
+        enabled = false;
+        print("You died!! :(");
+    }*/
 }
 
 
