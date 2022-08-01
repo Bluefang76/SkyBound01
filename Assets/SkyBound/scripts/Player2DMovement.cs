@@ -4,138 +4,69 @@ using UnityEngine;
 
 public class Player2DMovement : MonoBehaviour
 {
-    private Rigidbody2D rb;
-    [SerializeField] private int jumpSpeed;
-    [SerializeField] private float runSpeed;
-    public SpriteRenderer playerSprite;
-    [SerializeField] private int TForce;
-    //Vector3 local = transform.localScale;
-    /* public Animator animator;
-     private bool onground;*/
+    public float distance = 1f;
+    public LayerMask groundlayer;
+    public LayerMask tramplayer;
+    public Transform feet;
+    Buffed buffed;
 
-    float horInput;
-    // Start is called before the first frame update
-    void Start()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        //animator = GetComponent<Animator>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        //Jumping
-        if (Input.GetKeyDown(KeyCode.Space) /*&& onground*/)
-        {
-            Jump();
-        }
-
-       
-
-        //Movement
-
-        horInput = Input.GetAxis("Horizontal");
-        playerSprite.flipX = horInput < 0 ? true : false;
-
-       
-
-
-        /*animator.SetBool("run", horInput != 0);
-        animator.SetBool("onground", onground);*/
-
-        //OnBecameInvisible();
-
-    }
-
-    private void FixedUpdate()
-    {
-        rb.AddForce(Vector2.right * horInput * runSpeed);
-    }
-
-    private void Jump()
-    {
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-        //onground = false;
-    }
-
-    
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Trampoline")
-        {
-            
-            rb.AddForce(collision.gameObject.transform.up * TForce);
-            Debug.Log("Trampoline Collision");
-
-            if (collision.gameObject.TryGetComponent(out Trampoline trampoline))
-            {
-                trampoline.DoEffect();
-            }
-            /*collision.transform.localScale = new Vector3((float)1.5,(float)1.5, 0);
-            collision.transform.localScale = new Vector3((float)1, (float)1, 0);
-            collision.transform.localScale = new Vector3((float)1.5, (float)1.5, 0);
-            collision.transform.localScale = new Vector3(1, 1, 0);*/
-        }
-
-
-    }
-
-    /*public void OnBecameInvisible()
-    {
-        enabled = false;
-        print("You died!! :(");
-    }*/
-}
-
-
-
-
-
-/*using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class Player2DMovement : MonoBehaviour
-{
+    [Header ("Jump")]
+    public float jumpForce = 7;
     public float jumpspeed = 200;
     public float runspeed = 20;
-    Rigidbody2D rb2d;
-    public float launchforce = 10;
-    public float coyoteTime = 0.2f;
-    public float coyoteTimeCounter;
+
+    [Space]
+
+    [Header ("Move")]
+    //public float launchforce = 100;
+    private float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
+    public bool isTramped;
+    private float maxjumptime = 0.15f;
+    public float velocity;
+    public float multiplier;
+    //public float upSpeed = velocity * 2;
+    [Space]
+
+    public float minMulti;
+    public float maxMulti;
+    public float jumpCount;
+    public float maxJumpCount;
+    public AnimationCurve multiCurve;
+
     private bool isGrounded;
-    // Start is called before the first frame update
+    Rigidbody2D rb2d;
+
+    public bool hasJumped = false;
+
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        buffed = FindObjectOfType<Buffed>();
     }
 
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.CompareTag("Trampoline")) 
-        {
-            rb2d.AddForce(Vector2.up * launchforce);
-
-        }
-        if (other.gameObject.CompareTag("Land"))
-        {
-            isGrounded = true;
-        }
-    }
-    // Update is called once per frame
     void Update()
     {
-
-        
-       
-            
-          
-        if (isGrounded = true &&(Input.GetKeyDown(KeyCode.Space)))
+        if (isGrounded &&(Input.GetKeyDown(KeyCode.Space)))
         {
             rb2d.AddForce(transform.up * jumpspeed);
-            isGrounded = false;
+            
+        }
+
+        if (Input.GetKey(KeyCode.Space) && !isGrounded && coyoteTimeCounter < maxjumptime) 
+        {
+            rb2d.AddForce(transform.up * jumpForce);
+        }
+
+        if (!isGrounded || !isTramped)
+        {
+            coyoteTimeCounter += Time.deltaTime;
+        }
+       
+
+        if (isGrounded || isTramped)
+        {
+            coyoteTimeCounter = 0;
         }
 
         if ((Input.GetKey(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
@@ -154,8 +85,52 @@ public class Player2DMovement : MonoBehaviour
         if (Input.GetKey(KeyCode.R))
         {
             transform.position = new Vector2(-1, -1);
-            rb2d.velocity = (Vector2.zero);
-            
+            rb2d.velocity = (Vector2.zero);            
         }
     }
-}*/
+
+    public float GetJumpMultiplier()
+    {
+        float jumpMultiplier = 0;
+
+        float jumpPercent = Mathf.Clamp01(jumpCount/maxJumpCount);
+
+        float multiValue = multiCurve.Evaluate(jumpPercent);
+
+        jumpMultiplier = Mathf.Lerp(minMulti, maxMulti, multiValue);
+
+        return jumpMultiplier;
+    }
+
+    private void FixedUpdate()
+    {
+        // Trampoline
+        isTramped = Physics2D.Raycast(feet.position, -Vector2.up, distance, tramplayer);
+
+        if (!isTramped && hasJumped)
+            hasJumped = false;
+
+        Debug.DrawRay(feet.position, -Vector2.up * distance, Color.blue);
+        velocity = rb2d.velocity.magnitude;
+
+        if (isTramped && buffed.GetInput(KeyCode.Space))
+        {
+            if (!hasJumped)
+            {
+                jumpCount++;
+                hasJumped = true;
+              // Debug.Log("GetJumpMultiplier: " + GetJumpMultiplier());
+                rb2d.AddForce(Vector2.up * velocity * 2 * GetJumpMultiplier(), ForceMode2D.Impulse);
+            }
+        }
+        else if (isTramped)
+        {
+            rb2d.AddForce(Vector2.up * velocity * 2, ForceMode2D.Impulse);
+        }
+
+        // Grounding
+        isGrounded = Physics2D.Raycast(feet.position, -Vector2.up, distance, groundlayer);
+
+        Debug.DrawRay(transform.position, -Vector2.up * distance, Color.red);    
+    }
+}
