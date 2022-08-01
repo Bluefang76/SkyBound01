@@ -110,13 +110,8 @@ public class Player2DMovement : MonoBehaviour
         if (!isTramped && hasJumped)
             hasJumped = false;
 
-
         Debug.DrawRay(feet.position, -Vector2.up * distance, Color.blue);
         velocity = rb2d.velocity.magnitude;
-
-
-
-
 
         if (isTramped && buffed.GetInput(KeyCode.Space))
         {
