@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerNumber{
+    Player1,
+    Player2,
+}
 public class Player2DMovement : MonoBehaviour
 {
+    public PlayerNumber playerNumber;
     public float distance = 1f;
     public LayerMask groundlayer;
     public LayerMask tramplayer;
@@ -34,7 +39,7 @@ public class Player2DMovement : MonoBehaviour
     public float maxJumpCount;
     public AnimationCurve multiCurve;
 
-    private bool isGrounded;
+    public bool isGrounded;
     Rigidbody2D rb2d;
 
     public bool hasJumped = false;
@@ -104,8 +109,16 @@ public class Player2DMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+
+        // Grounding
+        isGrounded = Physics2D.Raycast(feet.position, -Vector2.up, distance, groundlayer);
+
+        Debug.DrawRay(transform.position, -Vector2.up * distance, Color.red);
         // Trampoline
-        isTramped = Physics2D.Raycast(feet.position, -Vector2.up, distance, tramplayer);
+        RaycastHit2D hit = Physics2D.Raycast(feet.position, -Vector2.up, distance, tramplayer);
+        isTramped = hit != null;
+        Trampoline trampoline = !isTramped ? null : hit.collider.GetComponent<Trampoline>();
 
         if (!isTramped && hasJumped)
             hasJumped = false;
@@ -119,13 +132,15 @@ public class Player2DMovement : MonoBehaviour
             {
                 jumpCount++;
                 hasJumped = true;
-              // Debug.Log("GetJumpMultiplier: " + GetJumpMultiplier());
-                rb2d.AddForce(Vector2.up * velocity * 2 * GetJumpMultiplier(), ForceMode2D.Impulse);
+                // Debug.Log("GetJumpMultiplier: " + GetJumpMultiplier());
+                Vector3 dir = trampoline.transform.up;
+                rb2d.AddForce(dir * velocity * 2f * GetJumpMultiplier(), ForceMode2D.Impulse);
             }
         }
         else if (isTramped)
         {
-            rb2d.AddForce(Vector2.up * velocity * 2, ForceMode2D.Impulse);
+            Vector3 dir = trampoline.transform.up;
+            rb2d.AddForce(dir * velocity * 2f, ForceMode2D.Impulse);
         }
 
         // Grounding
