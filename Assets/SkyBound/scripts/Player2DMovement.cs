@@ -17,7 +17,7 @@ public class Player2DMovement : MonoBehaviour
 
     [Header ("Jump")]
     public float jumpForce = 7;
-    public float jumpspeed = 200;
+    public float intialJumpForce = 200;
     public float runspeed = 20;
 
     [Space]
@@ -25,7 +25,7 @@ public class Player2DMovement : MonoBehaviour
     [Header ("Move")]
     //public float launchforce = 100;
     private float coyoteTime = 0.2f;
-    private float coyoteTimeCounter;
+    public float jumpTime;
     public bool isTramped;
     private float maxjumptime = 0.15f;
     public float velocity;
@@ -44,6 +44,9 @@ public class Player2DMovement : MonoBehaviour
 
     public bool hasJumped = false;
 
+    public float horInput;
+
+    bool isJumping;
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
@@ -52,46 +55,47 @@ public class Player2DMovement : MonoBehaviour
 
     void Update()
     {
+        horInput = Input.GetAxis("Horizontal");
+
+        // Intial Jump
         if (isGrounded &&(Input.GetKeyDown(KeyCode.Space)))
         {
-            rb2d.AddForce(transform.up * jumpspeed);
-            
+            rb2d.AddForce(transform.up * intialJumpForce);           
         }
 
-        if (Input.GetKey(KeyCode.Space) && !isGrounded && coyoteTimeCounter < maxjumptime) 
-        {
-            rb2d.AddForce(transform.up * jumpForce);
-        }
+        isJumping = (Input.GetKey(KeyCode.Space) && !isGrounded && jumpTime < maxjumptime);
 
-        if (!isGrounded || !isTramped)
+        if (!isGrounded && !isTramped)
         {
-            coyoteTimeCounter += Time.deltaTime;
-        }
-       
+            jumpTime += Time.deltaTime;
+        }   
 
         if (isGrounded || isTramped)
         {
-            coyoteTimeCounter = 0;
+            jumpTime = 0;
         }
 
-        if ((Input.GetKey(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
-        {
-            rb2d.AddForce(transform.right * runspeed);
-        }
-        if ((Input.GetKey(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
-        {
-            rb2d.AddForce(-transform.right * runspeed);
-        }
-
-        if ((Input.GetKey(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
-        {
-            rb2d.AddForce(transform.forward * runspeed);
-        }
+        // Restart
         if (Input.GetKey(KeyCode.R))
         {
             transform.position = new Vector2(-1, -1);
-            rb2d.velocity = (Vector2.zero);            
+            rb2d.velocity = (Vector2.zero);
         }
+        /*
+if ((Input.GetKey(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
+{
+    rb2d.AddForce(transform.right * runspeed);
+}
+if ((Input.GetKey(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
+{
+    rb2d.AddForce(-transform.right * runspeed);
+}
+
+if ((Input.GetKey(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
+{
+    rb2d.AddForce(transform.forward * runspeed);
+}
+*/
     }
 
     public float GetJumpMultiplier()
@@ -109,15 +113,28 @@ public class Player2DMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        RunJump();
+        TrampJump();
+    }
 
+    void RunJump()
+    {
+        rb2d.AddForce(transform.right * horInput * runspeed);
+
+        if (isJumping)
+            rb2d.AddForce(transform.up * jumpForce);
 
         // Grounding
         isGrounded = Physics2D.Raycast(feet.position, -Vector2.up, distance, groundlayer);
 
         Debug.DrawRay(transform.position, -Vector2.up * distance, Color.red);
+    }
+
+    void TrampJump()
+    {
         // Trampoline
         RaycastHit2D hit = Physics2D.Raycast(feet.position, -Vector2.up, distance, tramplayer);
-        isTramped = hit != null;
+        isTramped = (hit.collider != null);
         Trampoline trampoline = !isTramped ? null : hit.collider.GetComponent<Trampoline>();
 
         if (!isTramped && hasJumped)
@@ -141,11 +158,7 @@ public class Player2DMovement : MonoBehaviour
         {
             Vector3 dir = trampoline.transform.up;
             rb2d.AddForce(dir * velocity * 2f, ForceMode2D.Impulse);
+            trampoline.DoEffect();
         }
-
-        // Grounding
-        isGrounded = Physics2D.Raycast(feet.position, -Vector2.up, distance, groundlayer);
-
-        Debug.DrawRay(transform.position, -Vector2.up * distance, Color.red);    
     }
 }
