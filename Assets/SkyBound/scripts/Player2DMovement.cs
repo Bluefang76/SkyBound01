@@ -29,7 +29,7 @@ public class Player2DMovement : MonoBehaviour
     public bool isTramped;
     private float maxjumptime = 0.15f;
     public float velocity;
-    public float multiplier;
+    public float JumpMultiplier;
     //public float upSpeed = velocity * 2;
     [Space]
 
@@ -80,22 +80,9 @@ public class Player2DMovement : MonoBehaviour
         {
             transform.position = new Vector2(-1, -1);
             rb2d.velocity = (Vector2.zero);
+            jumpCount = 0;
         }
-        /*
-if ((Input.GetKey(KeyCode.D)) || (Input.GetKeyDown(KeyCode.RightArrow)))
-{
-    rb2d.AddForce(transform.right * runspeed);
-}
-if ((Input.GetKey(KeyCode.A)) || (Input.GetKeyDown(KeyCode.LeftArrow)))
-{
-    rb2d.AddForce(-transform.right * runspeed);
-}
-
-if ((Input.GetKey(KeyCode.W)) || (Input.GetKeyDown(KeyCode.UpArrow)))
-{
-    rb2d.AddForce(transform.forward * runspeed);
-}
-*/
+        
     }
 
     public float GetJumpMultiplier()
