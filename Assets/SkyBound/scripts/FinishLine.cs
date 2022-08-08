@@ -5,12 +5,11 @@ using TMPro;
 
 public class FinishLine : MonoBehaviour
 {
-    public GamePlayManager gamePlayManager;
-    public TextMeshProUGUI finishText;
-    public TextMeshProUGUI finishText2;
-
+    GamePlayManager gamePlayManager;
+ 
     private void Start()
     {
+        gamePlayManager = FindObjectOfType<GamePlayManager>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
