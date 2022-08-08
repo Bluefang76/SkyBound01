@@ -11,7 +11,6 @@ public class FinishLine : MonoBehaviour
 
     private void Start()
     {
-        finishText.text = "Player One Wins!!";
     }
 
     void OnTriggerEnter2D(Collider2D col)
