@@ -33,7 +33,8 @@ public class MPlayer2DMovement : MonoBehaviour
 
     /* public Animator animator;*/
     float horInput;
-
+    public string horInputString;
+    public KeyCode jumpButton;
 
     // Start is called before the first frame update
     void Start()
@@ -49,7 +50,7 @@ public class MPlayer2DMovement : MonoBehaviour
         Debug.DrawRay(rightFoot.position, -Vector2.up * distance, Color.blue);
 
         //Jumping
-        if (Input.GetKeyDown(KeyCode.Space) && IsGrounded(out _trampoline))
+        if (Input.GetKeyDown(jumpButton) && IsGrounded(out _trampoline))
         {
 
             float mulit = 1f;
@@ -68,7 +69,7 @@ public class MPlayer2DMovement : MonoBehaviour
 
 
         //Movement
-        horInput = Input.GetAxis("Horizontal");
+        horInput = Input.GetAxis(horInputString);
         playerSprite.flipX = horInput < 0 ? true : false;
 
     }

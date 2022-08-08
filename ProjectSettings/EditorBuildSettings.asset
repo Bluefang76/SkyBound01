@@ -5,7 +5,13 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/SkyBound/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/SkyBound/Scenes/TitleScene.unity
+    guid: 58b70fdd16f30f34e955eca808755dba
+  - enabled: 1
+    path: Assets/SkyBound/Scenes/currentworkingScene1.unity
+    guid: 1bb3b28de65bac34eb8b5a3acbf02126
   m_configObjects: {}
