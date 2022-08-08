@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerNumber
+{
+    Player1,
+    Player2,
+}
 public class MPlayer2DMovement : MonoBehaviour
 {
     private Rigidbody2D rb;
@@ -18,7 +23,7 @@ public class MPlayer2DMovement : MonoBehaviour
     public float distance = 1f;
     public LayerMask groundlayer;
     public LayerMask trampolinelayer;
-    public Transform feet;
+    public Transform leftFoot, rightFoot;
     Buffed buffed;
     public bool Jumped = false;
     public float velocity;
@@ -39,6 +44,9 @@ public class MPlayer2DMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(leftFoot.position, -Vector2.up * distance, Color.red);
+        Debug.DrawRay(rightFoot.position, -Vector2.up * distance, Color.blue);
+
         //Jumping
         if (Input.GetKeyDown(KeyCode.Space) && IsGrounded(out _trampoline))
         {
@@ -46,7 +54,8 @@ public class MPlayer2DMovement : MonoBehaviour
             float mulit = 1f;
             if (_trampoline != null)
             {
-                mulit = 3f;
+                
+                mulit = 2f;
                 _trampoline.DoEffect();
                 _trampoline = null;
 
@@ -82,15 +91,27 @@ public class MPlayer2DMovement : MonoBehaviour
     private bool IsGrounded(out Trampoline trampoline)
     {
         trampoline = null;
-        Debug.DrawRay(feet.position, -Vector2.up * distance, Color.red);
+        Debug.DrawRay(leftFoot.position, -Vector2.up * distance, Color.red);
 
-        RaycastHit2D hit = Physics2D.Raycast(feet.position, -Vector2.up, distance, groundlayer);
+        RaycastHit2D lefttHit = Physics2D.Raycast(leftFoot.position, -Vector2.up, distance, groundlayer);
+        RaycastHit2D rightHit = Physics2D.Raycast(rightFoot.position, -Vector2.up, distance, groundlayer);
 
-        bool onGround = (hit.collider != null);
+
+        bool leftGrounded = lefttHit.collider != null;
+        bool rightGrounded = rightHit.collider != null;
+
+        bool onGround = leftGrounded || rightGrounded;
 
         if (onGround) {
-            hit.collider.TryGetComponent(out Trampoline t);
-            trampoline = t;
+            if (leftGrounded)
+            {
+                lefttHit.collider.TryGetComponent(out Trampoline t);
+                trampoline = t;
+            }else if (rightGrounded)
+            {
+                rightHit.collider.TryGetComponent(out Trampoline t);
+                trampoline = t;
+            }
         }
 
         return onGround;

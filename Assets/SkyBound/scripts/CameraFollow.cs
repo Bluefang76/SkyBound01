@@ -21,6 +21,6 @@ public class CameraFollow : MonoBehaviour
 
     public Vector3 GetTargetOffsetPosition()
     {
-       return (target.position + offset);
+       return (new Vector3(0f, target.position.y, 0) + offset);
     }
 }
