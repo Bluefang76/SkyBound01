@@ -12,7 +12,7 @@ public class GamePlayManager : MonoBehaviour
         // We need to check the players index, (we will need to be added after a merge)
         // based off the players index we can change what the screen says
 
-        if (player.playerIndex == 1)
+        if (player.playerNumber == PlayerNumber.Player1)
         {
             player1EndScreen.SetActive(true);
         }
