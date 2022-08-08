@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1081961699}
   m_Layer: 0
-  m_Name: feet
+  m_Name: rightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081961698}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: -0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -41,7 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1329148802}
   m_Layer: 0
-  m_Name: feet
+  m_Name: leftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -55,7 +55,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1329148801}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.7, z: 0}
+  m_LocalPosition: {x: -0.5, y: -0.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -73,7 +73,7 @@ GameObject:
   - component: {fileID: 4097724690426113238}
   - component: {fileID: 4097724690426113237}
   - component: {fileID: 1694133576}
-  - component: {fileID: 1694133580}
+  - component: {fileID: 1694133582}
   m_Layer: 0
   m_Name: PlayerController
   m_TagString: Untagged
@@ -136,7 +136,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.5}
   m_Size: {x: 1, y: 2.5}
   m_Direction: 0
---- !u!114 &1694133580
+--- !u!114 &1694133582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -145,38 +145,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 4097724690426113243}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2570e9e328e07643806515002d3d058, type: 3}
+  m_Script: {fileID: 11500000, guid: ff61ee8306c548d4b94d670fcce0e470, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerNumber: 0
+  jumpSpeed: 10
+  runSpeed: 20
+  playerSprite: {fileID: 4097724691232600640}
+  TForce: 500
+  onTrampoline: 0
   distance: 1
   groundlayer:
     serializedVersion: 2
-    m_Bits: 64
-  tramplayer:
+    m_Bits: 192
+  trampolinelayer:
     serializedVersion: 2
-    m_Bits: 128
-  feet: {fileID: 1081961699}
-  jumpForce: 50
-  intialJumpForce: 200
-  runspeed: 20
-  jumpTime: 0
-  isTramped: 0
+    m_Bits: 0
+  leftFoot: {fileID: 1329148802}
+  rightFoot: {fileID: 1081961699}
+  Jumped: 0
   velocity: 0
-  multiplier: 0
-  minMulti: 0
-  maxMulti: 0
-  jumpCount: 0
-  maxJumpCount: 0
-  multiCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  isGrounded: 0
-  hasJumped: 0
-  horInput: 0
 --- !u!1 &4097724691232600646
 GameObject:
   m_ObjectHideFlags: 0
