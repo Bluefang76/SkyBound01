@@ -2,10 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum PlayerNumber{
-    Player1,
-    Player2,
-}
+
 public class Player2DMovement : MonoBehaviour
 {
     public PlayerNumber playerNumber;

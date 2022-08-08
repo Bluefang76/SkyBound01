@@ -7,7 +7,7 @@ public class GamePlayManager : MonoBehaviour
     public GameObject player1EndScreen;
     public GameObject player2EndScreen;
 
-    public void EndGame(Player2DMovement player)
+    public void EndGame(MPlayer2DMovement player)
     {
         // We need to check the players index, (we will need to be added after a merge)
         // based off the players index we can change what the screen says

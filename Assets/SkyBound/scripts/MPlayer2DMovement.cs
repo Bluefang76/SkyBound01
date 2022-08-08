@@ -9,6 +9,7 @@ public enum PlayerNumber
 }
 public class MPlayer2DMovement : MonoBehaviour
 {
+    public PlayerNumber playerNumber;
     private Rigidbody2D rb;
     [SerializeField] private int jumpSpeed;
     [SerializeField] private float runSpeed;

@@ -19,7 +19,7 @@ public class FinishLine : MonoBehaviour
         if (col.gameObject.layer == 8)// Player
         {
             Debug.Log("Play Hit FinishLine ");
-            Player2DMovement player = col.gameObject.GetComponent<Player2DMovement>();
+            MPlayer2DMovement player = col.gameObject.GetComponent<MPlayer2DMovement>();
             gamePlayManager.EndGame(player);
         }
     }
