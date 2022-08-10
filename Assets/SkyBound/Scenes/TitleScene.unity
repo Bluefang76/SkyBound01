@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   titleCanvas: {fileID: 1383745615}
   tutorialCanvas: {fileID: 287494106}
-  nextsceneName: currentworkingScene1
+  nextsceneName: Tamoya'sNewScene
   screenTime: 5
 --- !u!95 &1579876493
 Animator:

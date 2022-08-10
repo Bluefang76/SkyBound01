@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/SkyBound/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
+    path: Assets/SkyBound/Scenes/Tamoya'sNewScene.unity
+    guid: 67febe083238de94e8223ff3784df627
+  - enabled: 1
     path: Assets/SkyBound/Scenes/TitleScene.unity
     guid: 58b70fdd16f30f34e955eca808755dba
   - enabled: 1
