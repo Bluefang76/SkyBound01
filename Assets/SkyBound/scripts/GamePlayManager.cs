@@ -24,4 +24,12 @@ public class GamePlayManager : MonoBehaviour
         // Game is over, freeze player movement
         // pause score
     }
+
+    public void PlayLock()
+    {
+        
+    }
+
+
+
 }

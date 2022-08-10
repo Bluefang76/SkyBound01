@@ -5,21 +5,40 @@ using UnityEngine.SceneManagement;
 
 public class Scenemaster : MonoBehaviour
 {
+    public GameObject titleCanvas;
+    public GameObject tutorialCanvas;
+
     private bool titleScreen = true;
-    private bool game;
-    private bool win1;
-    private bool win2;
     public string nextsceneName;
-   
+    public float screenTime = 5f;
+
+
+    private void Start()
+    {
+        titleCanvas.SetActive(true);
+        tutorialCanvas.SetActive(false);
+    }
+
+
+
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SceneManager.LoadScene(nextsceneName);
+        
+
+        if (Input.GetKeyDown(KeyCode.Space) && titleScreen)
+        {            
             titleScreen = false;
+            titleCanvas.SetActive (false);
+            tutorialCanvas.SetActive(true);
+            Invoke("LoadNextScene", screenTime);
         }
 
 
 
+    }
+
+    private void LoadNextScene()
+    {
+        SceneManager.LoadScene(nextsceneName);
     }
 }
