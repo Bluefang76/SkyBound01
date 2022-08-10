@@ -9,7 +9,8 @@ public class Trampoline : MonoBehaviour
     public Color[] hitColor;
     [Space]
 
-    [Header ("Bounce FX")]
+    [Header("Bounce FX")]
+    public ParticleSystem particleSystem;
     public Transform anchor;
 
     public SpriteRenderer spriteRenderer;
@@ -41,6 +42,7 @@ public class Trampoline : MonoBehaviour
 
     public void DoEffect()
     {
+        particleSystem.Play();
         if (sequence != null)
             sequence.Complete();
 
