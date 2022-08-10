@@ -5,20 +5,53 @@ using DG.Tweening;
 
 public class Trampoline : MonoBehaviour
 {
-    Sequence sequence;
+    [Header("Hit FX")]
+    public Color[] hitColor;
+    [Space]
+
+    [Header ("Bounce FX")]
     public Transform anchor;
-    public void DoEffect()
+
+    public SpriteRenderer spriteRenderer;
+    public Vector3[] scale;
+    public float scaleTime;
+
+    Sequence sequence;
+
+    public void Hit()
     {
-        Debug.Log("Do Effect");
+
+        Debug.Log("Hit trampoline");
         if (sequence != null)
             sequence.Complete();
 
         sequence = DOTween.Sequence();
 
-        sequence.Insert(0, anchor.DOScaleY(1.25f, .33f).SetEase(Ease.OutQuad));
-        sequence.Insert(.33f, anchor.DOScaleY(0.85f, .33f).SetEase(Ease.OutQuad));
-        sequence.Insert(.66f, anchor.DOScaleY(1f, .33f).SetEase(Ease.OutQuad));
+        float duration = scaleTime / hitColor.Length;
 
+        for (int i = 0; i < hitColor.Length; i++)
+        {
+            sequence.Insert(duration * i, spriteRenderer.DOColor(hitColor[i], duration).SetEase(Ease.OutQuad));
+        }
+
+
+        sequence.SetLoops(2, LoopType.Restart);
+        sequence.Play();
+    }
+
+    public void DoEffect()
+    {
+        if (sequence != null)
+            sequence.Complete();
+
+        sequence = DOTween.Sequence();
+
+        float duration = scaleTime / scale.Length;
+
+        for (int i = 0; i < scale.Length; i++)
+        {
+            sequence.Insert(duration * i, anchor.DOScale(scale[i], duration).SetEase(Ease.OutQuad));
+        }
 
         sequence.Play();
     }

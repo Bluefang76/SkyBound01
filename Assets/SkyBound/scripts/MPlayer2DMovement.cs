@@ -11,11 +11,12 @@ public class MPlayer2DMovement : MonoBehaviour
 {
     public PlayerNumber playerNumber;
     private Rigidbody2D rb;
-    [SerializeField] private int jumpSpeed;
+    [SerializeField] private float _intialJumpForce;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private float _fallForce;
+
     [SerializeField] private float runSpeed;
     public SpriteRenderer playerSprite;
-    [SerializeField] private int TForce;
-
 
     //Jahmal
     public bool onTrampoline;
@@ -27,14 +28,19 @@ public class MPlayer2DMovement : MonoBehaviour
     public Transform leftFoot, rightFoot;
     Buffed buffed;
     public bool Jumped = false;
-    public float velocity;
+    //public float velocity;
 
+    Trampoline _trampolineLast;
     Trampoline _trampoline;
 
     /* public Animator animator;*/
     float horInput;
     public string horInputString;
     public KeyCode jumpButton;
+
+    bool holdingJump;
+    float airTime;
+    public float maxAirTime;
 
     // Start is called before the first frame update
     void Start()
@@ -49,24 +55,45 @@ public class MPlayer2DMovement : MonoBehaviour
         Debug.DrawRay(leftFoot.position, -Vector2.up * distance, Color.red);
         Debug.DrawRay(rightFoot.position, -Vector2.up * distance, Color.blue);
 
+        if (IsGrounded(out _trampoline))
+        {
+            if (_trampoline != null)
+            {
+                if (_trampolineLast != _trampoline)
+                {
+                    _trampoline.Hit();
+                    _trampolineLast = _trampoline;
+                }
+            }
+            else
+            {
+                _trampolineLast = null;
+            }
+        }
+        else
+        {
+            _trampolineLast = null;
+        }
+
         //Jumping
         if (Input.GetKeyDown(jumpButton) && IsGrounded(out _trampoline))
         {
+            airTime = 0;
 
-            float mulit = 1f;
+            float multi = 1f;
             if (_trampoline != null)
             {
                 
-                mulit = 2f;
+                multi = 2f;
                 _trampoline.DoEffect();
                 _trampoline = null;
 
             }
 
-            Jump(mulit);
+            IntialJump(multi);
         }
 
-
+        holdingJump = Input.GetKey(jumpButton) && !IsGrounded(out _trampoline);
 
         //Movement
         horInput = Input.GetAxis(horInputString);
@@ -77,15 +104,37 @@ public class MPlayer2DMovement : MonoBehaviour
     private void FixedUpdate()
     {
         Run();
+        AirJump();
     }
 
-    private void Jump(float multi)
+    private void AirJump()
     {
-        rb.velocity = new Vector2(rb.velocity.x, jumpSpeed * multi);
-        
+        if (!holdingJump)
+            return;
+
+        airTime += Time.deltaTime;
+
+
+        if (airTime < maxAirTime)
+        {
+            Vector3 jumpDir = Vector3.up;
+            rb.AddForce(jumpDir * _jumpForce);
+        }
+        else
+        {
+            Vector3 jumpDir = -Vector3.up;
+            rb.AddForce(jumpDir * _fallForce);
+        }
+      
+
+    }
+    private void IntialJump(float multi)
+    {
+        Vector3 jumpDir = Vector3.up;
+        rb.AddForce(jumpDir * _intialJumpForce * multi);
     }
 
-     private void Run()
+    private void Run()
     {
         rb.AddForce(Vector2.right * horInput * runSpeed);
     }
@@ -119,22 +168,3 @@ public class MPlayer2DMovement : MonoBehaviour
         return onGround;
     }
 }
-
-/*private void OnCollisionEnter2D(Collision2D collision)
-   {
-       if (collision.gameObject.tag == "Trampoline")
-       {
-
-           rb.AddForce(collision.gameObject.transform.up * TForce);
-           Debug.Log("Trampoline Collision");
-
-           if (collision.gameObject.TryGetComponent(out Trampoline trampoline))
-           {
-               trampoline.DoEffect();
-           }
-
-       }
-
-   }*/
-
-//multiplier and streak aspects will be added here.

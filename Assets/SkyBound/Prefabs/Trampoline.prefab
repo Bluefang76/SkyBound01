@@ -146,7 +146,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963afc34f8e62b5468351c980d665d2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitColor:
+  - {r: 0.990566, g: 0.90454835, b: 0.4149163, a: 1}
+  - {r: 0.62752956, g: 1, b: 0.2867924, a: 1}
+  - {r: 0.40943396, g: 0.84206504, b: 1, a: 1}
+  - {r: 0.990566, g: 0.6714165, b: 0.237362, a: 1}
+  - {r: 1, g: 0.3339622, b: 0.79229796, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
   anchor: {fileID: 6981917574595412038}
+  spriteRenderer: {fileID: 6981917573806464824}
+  scale:
+  - {x: 1.5, y: 0.5, z: 1}
+  - {x: 0.75, y: 1.25, z: 1}
+  - {x: 1.125, y: 0.85, z: 1}
+  - {x: 1, y: 1, z: 1}
+  scaleTime: 0.35
 --- !u!1 &6981917574595412041
 GameObject:
   m_ObjectHideFlags: 0
