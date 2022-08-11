@@ -20,7 +20,7 @@ public class MPlayer2DMovement : MonoBehaviour
 
     //Jahmal
     public bool onTrampoline;
-    //public bool grounded;
+    
 
     public float distance = 1f;
     public LayerMask groundlayer;
@@ -33,7 +33,7 @@ public class MPlayer2DMovement : MonoBehaviour
     Trampoline _trampolineLast;
     Trampoline _trampoline;
 
-    /* public Animator animator;*/
+    private Animator animator;
     float horInput;
     public string horInputString;
     public KeyCode jumpButton;
@@ -41,12 +41,13 @@ public class MPlayer2DMovement : MonoBehaviour
     bool holdingJump;
     float airTime;
     public float maxAirTime;
+    private bool grounded;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //animator = GetComponent<Animator>();
+        animator = GetComponent<Animator>(); 
     }
 
     // Update is called once per frame
@@ -97,8 +98,20 @@ public class MPlayer2DMovement : MonoBehaviour
 
         //Movement
         horInput = Input.GetAxis(horInputString);
-        playerSprite.flipX = horInput < 0 ? true : false;
 
+        if (horInput < -0.25f && !playerSprite.flipX)
+        {
+            playerSprite.flipX = true;
+        }
+        else if (horInput > 0.25f && playerSprite.flipX) 
+        {
+            playerSprite.flipX = false;
+        }
+
+        animator.SetBool("run", horInput != 0);
+
+        //Jump animation check
+        animator.SetBool("grounded", grounded);
     }
    
     private void FixedUpdate()
@@ -132,6 +145,7 @@ public class MPlayer2DMovement : MonoBehaviour
     {
         Vector3 jumpDir = Vector3.up;
         rb.AddForce(jumpDir * _intialJumpForce * multi);
+        grounded = false;
     }
 
     private void Run()
@@ -152,6 +166,7 @@ public class MPlayer2DMovement : MonoBehaviour
         bool rightGrounded = rightHit.collider != null;
 
         bool onGround = leftGrounded || rightGrounded;
+        grounded = onGround;
 
         if (onGround) {
             if (leftGrounded)
