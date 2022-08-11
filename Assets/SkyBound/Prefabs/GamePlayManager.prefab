@@ -461,7 +461,6 @@ GameObject:
   - component: {fileID: 6561281390019263027}
   - component: {fileID: 1324003023655631659}
   - component: {fileID: 1980375206295649983}
-  - component: {fileID: 1828531310118395821}
   m_Layer: 5
   m_Name: CountDown (1)
   m_TagString: Untagged
@@ -586,21 +585,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &1828531310118395821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5290634571344683534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f6e3c878d48e8474aad2fc5327aa1237, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  countDowndisplay: {fileID: 5290634571344683534}
-  CountDowntxt: {fileID: 1980375206295649983}
-  countDown: []
 --- !u!1 &6822603002974185267
 GameObject:
   m_ObjectHideFlags: 0
@@ -746,6 +730,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7859058671822483772}
   - component: {fileID: 7859058671822483773}
+  - component: {fileID: 4307776238457996747}
   m_Layer: 0
   m_Name: GamePlayManager
   m_TagString: Untagged
@@ -785,6 +770,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player1EndScreen: {fileID: 7859058673473244461}
   player2EndScreen: {fileID: 7859058672866780759}
+  nextsceneName: ResetScene
+  screenTime: 5
+--- !u!114 &4307776238457996747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7859058671822483770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6e3c878d48e8474aad2fc5327aa1237, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  countDowndisplay: {fileID: 5290634571344683534}
+  CountDowntxt: {fileID: 1980375206295649983}
+  countDown: []
 --- !u!1 &7859058672443629320
 GameObject:
   m_ObjectHideFlags: 0

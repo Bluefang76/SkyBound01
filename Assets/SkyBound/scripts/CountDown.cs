@@ -5,6 +5,9 @@ using TMPro;
 
 public class CountDown : MonoBehaviour
 {
+
+    public MPlayer2DMovement player1;
+    public MPlayer2DMovement player2;
     public GameObject countDowndisplay;
     public TextMeshProUGUI CountDowntxt;
     public string[] countDown;
@@ -24,6 +27,9 @@ public class CountDown : MonoBehaviour
 
     IEnumerator CountDownDisplay()
     {
+        player1.enabled = (false);
+        player2.enabled = (false);
+
         yield return new WaitForSeconds(1);
 
         CountDowntxt.text = countDown[0];
@@ -43,5 +49,7 @@ public class CountDown : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         countDowndisplay.SetActive(false);
+        player1.enabled = (true);
+        player2.enabled = (true);
     }
 }
