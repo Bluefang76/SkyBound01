@@ -19,9 +19,13 @@ public class Trampoline : MonoBehaviour
 
     Sequence sequence;
 
+    public AudioSource audiosource;
+    public AudioClip soundboing;
+    public AudioClip landsound;
+
     public void Hit()
     {
-
+        audiosource.PlayOneShot(landsound);
         Debug.Log("Hit trampoline");
         if (sequence != null)
             sequence.Complete();
@@ -43,6 +47,8 @@ public class Trampoline : MonoBehaviour
     public void DoEffect()
     {
         particleSystem.Play();
+        audiosource.PlayOneShot(soundboing); 
+
         if (sequence != null)
             sequence.Complete();
 
