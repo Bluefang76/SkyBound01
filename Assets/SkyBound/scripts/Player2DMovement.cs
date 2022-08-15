@@ -21,7 +21,7 @@ public class Player2DMovement : MonoBehaviour
 
     [Header ("Move")]
     //public float launchforce = 100;
-    private float coyoteTime = 0.2f;
+    //private float coyoteTime = 0.2f;
     public float jumpTime;
     public bool isTramped;
     private float maxjumptime = 0.15f;

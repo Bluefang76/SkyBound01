@@ -11,20 +11,26 @@ public class CountDown : MonoBehaviour
     public GameObject countDowndisplay;
     public TextMeshProUGUI CountDowntxt;
     public string[] countDown;
+    public Timer timer;
+    
 
     // Start is called before the first frame update
     void Start()
     {
+
         countDown = new string[4];
         countDown[0] = "3";
         countDown[1] = "2";
         countDown[2] = "1";
         countDown[3] = "Go";
         CountDowntxt.text = countDown[0];
-
+        
         StartCoroutine(CountDownDisplay());
+       
     }
 
+
+    
     IEnumerator CountDownDisplay()
     {
         player1.enabled = (false);
@@ -51,5 +57,6 @@ public class CountDown : MonoBehaviour
         countDowndisplay.SetActive(false);
         player1.enabled = (true);
         player2.enabled = (true);
+        timer.enabled = (true);
     }
 }

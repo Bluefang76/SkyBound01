@@ -24,7 +24,7 @@ public class EndScreenManager : MonoBehaviour
 
         if ((Input.GetKeyDown(KeyCode.A)) || Input.GetKeyDown(KeyCode.D))
         {
-            Invoke("Quit", screenTime);
+            Invoke("PlayAgain", screenTime);
         }
 
     }
