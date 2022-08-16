@@ -25,9 +25,9 @@ public class Scenemaster : MonoBehaviour
     {
         
 
-        if (Input.GetKeyDown(KeyCode.Space) && titleScreen)
+        if (Input.GetKeyDown(KeyCode.Space) || (Input.GetKeyDown(KeyCode.UpArrow)))
         {            
-            titleScreen = false;
+            
             titleCanvas.SetActive (false);
             tutorialCanvas.SetActive(true);
             Invoke("LoadNextScene", screenTime);

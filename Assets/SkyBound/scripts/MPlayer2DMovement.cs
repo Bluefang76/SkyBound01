@@ -89,11 +89,10 @@ public class MPlayer2DMovement : MonoBehaviour
                 multi = 2f;
                 _trampoline.DoEffect();
                 _trampoline = null;
-
+                screenShake.StartShake();
             }
-             
+
             IntialJump(multi);
-            screenShake.StartShake();
         }
 
         holdingJump = Input.GetKey(jumpButton) && !IsGrounded(out _trampoline);
@@ -137,6 +136,7 @@ public class MPlayer2DMovement : MonoBehaviour
         }
         else
         {
+            Debug.Log("falling");
             Vector3 jumpDir = -Vector3.up;
             rb.AddForce(jumpDir * _fallForce);
         }
