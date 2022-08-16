@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7567477609575728239}
   - component: {fileID: 880598485}
+  - component: {fileID: 634542866}
   m_Layer: 0
   m_Name: CameraGroup
   m_TagString: Untagged
@@ -47,8 +48,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   smoothSpeed: 0.125
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 0, y: 3.12, z: -10}
   velocity: {x: 0, y: 0, z: 0}
+--- !u!114 &634542866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7567477609575728238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c71183caab59d5f4e9f55fc821e190e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camera: {fileID: 7567477609867780826}
+  orignalPosition: {x: 0, y: 0, z: 0}
+  _duration: 0.25
+  _magnitude: 7
 --- !u!1 &7567477609707304023
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +140,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.54530305, g: 0.20409396, b: 0.735849, a: 0}
+  m_BackGroundColor: {r: 0.21568629, g: 0.19215688, b: 0.24705884, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -140,7 +157,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 13
+  orthographic size: 8
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
