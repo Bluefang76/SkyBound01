@@ -9,6 +9,7 @@ public enum PlayerNumber
 }
 public class MPlayer2DMovement : MonoBehaviour
 {
+    public ScreenShake screenShake;
     public PlayerNumber playerNumber;
     private Rigidbody2D rb;
     [SerializeField] private float _intialJumpForce;
@@ -90,8 +91,9 @@ public class MPlayer2DMovement : MonoBehaviour
                 _trampoline = null;
 
             }
-
+             
             IntialJump(multi);
+            screenShake.StartShake();
         }
 
         holdingJump = Input.GetKey(jumpButton) && !IsGrounded(out _trampoline);
